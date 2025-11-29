@@ -78,26 +78,19 @@ try:
 
         # 2. цикл: метр + действия, пока не появится 12
         while True:
-            time.sleep(1.0)
-            meter = read_meter()
+            time.sleep(2.0)
+            meter = read_meter()          # ждём цифру
             if meter >= 7:
-                print("[+] Метр ≥ 7 → E-W-F-Пробел-Пробел")
-                keyboard.send('e')
-                time.sleep(1.0)
-                keyboard.send('w')
-                time.sleep(1.0)
-                keyboard.send('f')
-                time.sleep(1.0)
-                keyboard.send('space')
-                time.sleep(0.1)
+                keyboard.send('e'); time.sleep(1.0)
+                keyboard.send('w'); time.sleep(1.0)
+                keyboard.send('f'); time.sleep(0.5)
+                keyboard.send('space'); time.sleep(0.1)
                 keyboard.send('space')
             else:
-                print("[+] Метр < 7 → F-F")
-                keyboard.send('f')
-                time.sleep(0.5)
+                keyboard.send('f'); time.sleep(0.5)
                 keyboard.send('f')
 
-            # проверяем, появилась ли картинка 12
+            # 12 ищем ТОЛЬКО здесь – выходим, когда появилась
             try:
                 if pyautogui.locateOnScreen(img('images/12.png'), confidence=CONF):
                     print("[+] Найдено 12 → выход из цикла метра")
