@@ -86,8 +86,13 @@ try:
         # 2. OCR-ветвление по метру
         meter = read_meter()
         if meter >= 7:
-            print("[+] Метр ≥ 7 → жмём E")
+            print("[+] Метр ≥ 7 → жмём E дважды")
             pyautogui.press('e')
+            time.sleep(0.1)
+            pyautogui.press('e')
+            pyautogui.press('space')
+            time.sleep(0.1)
+            pyautogui.press('space')
         else:
             print("[+] Метр < 7 → дважды F")
             pyautogui.press('f')
