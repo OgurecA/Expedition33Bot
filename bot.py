@@ -1,4 +1,4 @@
-wf  import pyautogui
+import pyautogui
 import time
 import keyboard
 import sys, os
