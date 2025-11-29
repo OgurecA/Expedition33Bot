@@ -100,12 +100,18 @@ try:
                 time.sleep(2.0)
                 meter = read_meter()
                 if meter >= 7:
+                    # вставляем ПЕРЕД первым keyboard.send внутри цикла метра
+                    try:
+                        game_window = pyautogui.getWindowsWithTitle('Expedition 33')[0]   # заголовок окна
+                        game_window.activate()
+                    except Exception as e:
+                    print(f"[!] Не удалось активировать окно игры: {e}")
                     keyboard.send('e')
                     time.sleep(1.0)
                     keyboard.send('w')
                     time.sleep(1.0)
                     keyboard.send('f')
-                    time.sleep(4.0)
+                    time.sleep(3.0)
                     keyboard.send('space')
                     time.sleep(0.1)
                     keyboard.send('space')
