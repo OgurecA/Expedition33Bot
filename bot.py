@@ -64,26 +64,32 @@ try:
         wait_and_hold_lmb('images/5.png', 2)
 
         # 2. ПОСЛЕ 5.png – ПУСТО, ждём твоей команды
-        print("[+] Перерыв 5 сек...")
+        print("[+] Ждём 5 сек после начала боя...")
         time.sleep(5.0)
-        print("[+] Нажимаем E-W-F-Space-Space")
+        print("[+] Phantom Strike")
         keyboard.send('e'); time.sleep(1.0)
         keyboard.send('w'); time.sleep(1.0)
         keyboard.send('f'); time.sleep(1.0)
                 # 2. после начала боя: ждём 5 сек, затем E-Q-F с интервалом 1 сек
-        print("[+] Ждём 5 сек после начала боя...")
+        print("[+] Перерыв 5 сек...")
         time.sleep(7.0)
-        print("[+] Нажимаем E-Q-F с интервалом 1 сек")
+        print("[+] Last Chance")
         keyboard.send('e'); time.sleep(1.0)
         keyboard.send('q'); time.sleep(1.0)
         keyboard.send('f'); time.sleep(1.0)
                 # 3. ещё 5 сек перерыв, затем E-W-F-Space-Space
         print("[+] Перерыв 5 сек...")
         time.sleep(5.0)
-        print("[+] Нажимаем E-W-F-Space-Space")
+        print("[+] Phantom Strike")
         keyboard.send('e'); time.sleep(1.0)
         keyboard.send('w'); time.sleep(1.0)
         keyboard.send('f'); time.sleep(1.0)
+        # 3. Бой закончен
+        print("[+] Бой окончен")
+        print("[+] Перерыв 5 сек...")
+        time.sleep(5.0)
+        keyboard.send('f'); time.sleep(5.0)
+        keyboard.send('f'); time.sleep(2.0)
 
         print("[+] Цикл завершён, повторяем...")
         time.sleep(1)          # просто ждём, пока ты не скажешь, что делать
