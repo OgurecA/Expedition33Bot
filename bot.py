@@ -1,4 +1,4 @@
-import pyautogui
+wf  import pyautogui
 import time
 import keyboard
 import sys, os
@@ -77,12 +77,13 @@ try:
                 pass
 
             # нажатия без задержек между проверками
+            time.sleep(2.0)
             keyboard.send('e')
             time.sleep(2.0)
             keyboard.send('w')
             time.sleep(2.0)
             keyboard.send('f')
-            time.sleep(2.0)
+            time.sleep(3.0)
             keyboard.send('space')
             time.sleep(0.1)
             keyboard.send('space')
