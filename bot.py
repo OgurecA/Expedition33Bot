@@ -105,11 +105,9 @@ try:
                     keyboard.send('w')
                     time.sleep(1.0)
                     keyboard.send('f')
-                    time.sleep(0.1)
-                    print("[+] Space")
+                    time.sleep(4.0)
                     keyboard.send('space')
                     time.sleep(0.1)
-                    print("[+] Space")
                     keyboard.send('space')
                     time.sleep(4.0)
                 else:
@@ -117,8 +115,9 @@ try:
                     keyboard.send('f')
                     time.sleep(4.0)
 
-                if pyautogui.locateOnScreen(img('images/12.png'), confidence=CONF):
-                    print("[+] Найдено 12 → выход из цикла метра")
+                if (pyautogui.locateOnScreen(img('images/12.png'), confidence=CONF) or
+                    pyautogui.locateOnScreen(img('images/13.png'), confidence=CONF)):
+                    print("[+] Бой закончен → выход из цикла метра")
                     break
             except Exception as e:
                 print(f"[!] Ошибка в цикле метра: {type(e).__name__}: {e.args}")
