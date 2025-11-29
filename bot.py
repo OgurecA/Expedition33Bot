@@ -76,21 +76,32 @@ try:
         wait_and_click('images/2.png')
         wait_and_hold_lmb('images/5.png', 2)
 
-        # 2. OCR-ветвление по метру
-        meter = read_meter()
-        if meter >= 7:
-            print("[+] Метр ≥ 7 → жмём E дважды")
-            pyautogui.press('e')
-            time.sleep(0.1)
-            pyautogui.press('e')
-            pyautogui.press('space')
-            time.sleep(0.1)
-            pyautogui.press('space')
-        else:
-            print("[+] Метр < 7 → дважды F")
-            pyautogui.press('f')
-            time.sleep(0.1)
-            pyautogui.press('f')
+        # 2. цикл: метр + действия, пока не появится 12
+        while True:
+            time.sleep(1.0)
+            meter = read_meter()
+            if meter >= 7:
+                print("[+] Метр ≥ 7 → E-E-Пробел-Пробел")
+                pyautogui.press('e')
+                time.sleep(0.5)
+                pyautogui.press('e')
+                time.sleep(0.3)
+                pyautogui.press('space')
+                time.sleep(0.1)
+                pyautogui.press('space')
+            else:
+                print("[+] Метр < 7 → F-F")
+                pyautogui.press('f')
+                time.sleep(0.5)
+                pyautogui.press('f')
+
+            # проверяем, появилась ли картинка 12
+            try:
+                if pyautogui.locateOnScreen(img('images/12.png'), confidence=CONF):
+                    print("[+] Найдено 12 → выход из цикла метра")
+                    break
+            except pyautogui.ImageNotFoundException:
+                pass
 
         print("[+] Цикл завершён, повторяем...")
 except KeyboardInterrupt:
