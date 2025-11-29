@@ -3,10 +3,12 @@ import time
 import keyboard
 import sys, os
 import pytesseract
+import cv2
+import numpy as np
 from PIL import Image
 
 # ----------------- настройки -----------------
-CONF        = 0.7
+CONF        = 0.6
 LOOP_DELAY  = 0.5
 
 BASE = getattr(sys, '_MEIPASS', os.path.abspath('.'))
@@ -15,15 +17,30 @@ def img(path):
 
 # ----------------- OCR: читаем метр -----------------
 def read_meter():
-    """Сравниваем 10 шаблонов цифр и возвращаем текущее значение метра (0-9)."""
+    """Перебираем 10 шаблонов 0a.png ... 9a.png на всём экране и берём лучшее совпадение."""
     while True:
-        for digit in range(10):
+        best_digit = None
+        best_conf  = 0
+        screen     = np.array(pyautogui.screenshot())
+
+        for d in range(10):
             try:
-                if pyautogui.locateOnScreen(img(f'images/meter{digit}.png'), confidence=CONF):
-                    print(f"[+] Метр = {digit}")
-                    return digit
-            except pyautogui.ImageNotFoundException:
-                pass
+                template = cv2.imread(img(f'images/{d}a.png'), cv2.IMREAD_COLOR)
+                if template is None:
+                    continue
+                res = cv2.matchTemplate(screen, template, cv2.TM_CCOEFF_NORMED)
+                _, max_val, _, _ = cv2.minMaxLoc(res)
+                if max_val > best_conf:
+                    best_conf  = max_val
+                    best_digit = d
+            except Exception as e:
+                print(f"[!] Ошибка при поиске {d}a: {e}")
+                continue
+
+        if best_conf >= CONF:
+            print(f"[+] Метр = {best_digit} (conf={best_conf:.2f})")
+            return best_digit
+
         time.sleep(LOOP_DELAY)
 
 # ----------------- старые функции (без изменений) -----------------
