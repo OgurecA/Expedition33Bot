@@ -15,22 +15,15 @@ def img(path):
 
 # ----------------- OCR: читаем метр -----------------
 def read_meter():
-    """Возвращает целое значение метра (0-10) с экрана."""
+    """Сравниваем 10 шаблонов цифр и возвращаем текущее значение метра (0-9)."""
     while True:
-        try:
-            # делаем скрин области meter.png
-            region = pyautogui.locateOnScreen(img('images/11.png'), confidence=CONF)
-            if region:
-                # захватываем только эту область
-                im = pyautogui.screenshot(region=region)
-                # OCR → цифра
-                text = pytesseract.image_to_string(im, config='--psm 8 -c tessedit_char_whitelist=0123456789').strip()
-                if text.isdigit():
-                    val = int(text)
-                    print(f"[OCR] Метр = {val}")
-                    return val
-        except Exception as e:
-            pass
+        for digit in range(10):
+            try:
+                if pyautogui.locateOnScreen(img(f'images/meter{digit}.png'), confidence=CONF):
+                    print(f"[+] Метр = {digit}")
+                    return digit
+            except pyautogui.ImageNotFoundException:
+                pass
         time.sleep(LOOP_DELAY)
 
 # ----------------- старые функции (без изменений) -----------------
