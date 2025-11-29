@@ -82,18 +82,18 @@ try:
             meter = read_meter()
             if meter >= 7:
                 print("[+] Метр ≥ 7 → E-E-Пробел-Пробел")
-                pyautogui.press('e')
+                keyboard.send('e')
                 time.sleep(0.5)
-                pyautogui.press('e')
+                keyboard.send('e')
                 time.sleep(0.3)
-                pyautogui.press('space')
+                keyboard.send('space')
                 time.sleep(0.1)
-                pyautogui.press('space')
+                keyboard.send('space')
             else:
                 print("[+] Метр < 7 → F-F")
-                pyautogui.press('f')
+                keyboard.send('f')
                 time.sleep(0.5)
-                pyautogui.press('f')
+                keyboard.send('f')
 
             # проверяем, появилась ли картинка 12
             try:
