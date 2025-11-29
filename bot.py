@@ -3,19 +3,20 @@ import time
 import keyboard
 import sys, os
 
-# Настройки
-CONF = 0.8
-LOOP_DELAY = 0.5
+# ----------------- настройки -----------------
+CONF        = 0.7          # чувствительность поиска картинки
+LOOP_DELAY  = 0.5          # пауза между попытками
 
-# Базовая папка: если запущен из упакованного exe – _MEIPASS, иначе текущая
+# путь к ресурсам внутри упакованного PyInstaller-EXE
 BASE = getattr(sys, '_MEIPASS', os.path.abspath('.'))
 
 def img(path):
-    """Возвращает абсолютный путь к картинке внутри exe."""
+    """Абсолютный путь к файлу внутри exe."""
     return os.path.join(BASE, path)
 
+# ----------------- вспомогательные функции -----------------
 def wait_and_hold_key(image, key, hold_time):
-    """Ждём появления картинки, затем удерживаем клавишу."""
+    """Бесконечно ждём картинку, затем удерживаем клавишу."""
     while True:
         pos = pyautogui.locateOnScreen(img(image), confidence=CONF)
         if pos:
@@ -27,7 +28,7 @@ def wait_and_hold_key(image, key, hold_time):
         time.sleep(LOOP_DELAY)
 
 def wait_and_click(image):
-    """Ждём появления картинки и кликаем один раз."""
+    """Бесконечно ждём картинку и кликаем 1 раз."""
     while True:
         pos = pyautogui.locateOnScreen(img(image), confidence=CONF)
         if pos:
@@ -37,7 +38,7 @@ def wait_and_click(image):
         time.sleep(LOOP_DELAY)
 
 def wait_and_hold_lmb(image, hold_time):
-    """Ждём появления картинки и удерживаем ЛКМ."""
+    """Бесконечно ждём картинку и удерживаем ЛКМ."""
     while True:
         pos = pyautogui.locateOnScreen(img(image), confidence=CONF)
         if pos:
@@ -48,7 +49,7 @@ def wait_and_hold_lmb(image, hold_time):
             return
         time.sleep(LOOP_DELAY)
 
-# === Основной цикл ===
+# ----------------- основной цикл -----------------
 print("Бот запущен. Нажми Ctrl+C для остановки.")
 try:
     while True:
