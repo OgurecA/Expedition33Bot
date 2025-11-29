@@ -17,10 +17,10 @@ def img(path):
 
 # ----------------- OCR: читаем метр -----------------
 def read_meter():
-    """Перебираем 10 шаблонов 0a.png ... 9a.png на всём экране и берём лучшее совпадение."""
+    """Перебираем 10 шаблонов 0a.png ... 9a.png и берём ЛУЧШЕЕ совпадение (даже 0.1)."""
     while True:
         best_digit = None
-        best_conf  = 0
+        best_conf  = -1.0
         screen     = np.array(pyautogui.screenshot())
 
         for d in range(10):
@@ -37,8 +37,9 @@ def read_meter():
                 print(f"[!] Ошибка при поиске {d}a: {e}")
                 continue
 
-        if best_conf >= CONF:
-            print(f"[+] Метр = {best_digit} (conf={best_conf:.2f})")
+        # ВСЕГДА возвращаем лучшую цифру (даже если conf 0.01)
+        if best_digit is not None:
+            print(f"[+] Метр = {best_digit} (лучшее совпадение {best_conf:.3f})")
             return best_digit
 
         time.sleep(LOOP_DELAY)
