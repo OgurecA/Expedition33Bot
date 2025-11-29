@@ -55,7 +55,6 @@ def wait_and_hold_lmb(image, hold_time):
         time.sleep(LOOP_DELAY)
 
 # ----------------- основной цикл (НОВОЕ) -----------------
-# ----------------- основной цикл (НОВОЕ) -----------------
 print("Бот запущен. Нажми Ctrl+C для остановки.")
 try:
     while True:
@@ -64,10 +63,21 @@ try:
         wait_and_click('images/2.png')
         wait_and_hold_lmb('images/5.png', 2)
 
-        # 2. фоновая серия нажатий до появления 12 или 13
-        print("[+] Запускаем серию E-W-F-Space-Space до появления 12/13")
+        # 2. ждём 14.png, затем запускаем серию до 12/13
+        print("[+] Жду появления 14.png...")
         while True:
-            # фоновая проверка 12/13 каждую 1 секунду
+            try:
+                if pyautogui.locateOnScreen(img('images/14.png'), confidence=CONF):
+                    print("[+] Найдено 14 → запускаем серию E-W-F-Space-Space")
+                    break
+            except pyautogui.ImageNotFoundException:
+                pass
+            time.sleep(1.0)
+
+        # 3. серия нажатий до появления 12 или 13
+        print("[+] Запускаем серию E-W-F-Space-Space до 12/13")
+        while True:
+            # фоновая проверка 12/13 каждую секунду
             try:
                 if (pyautogui.locateOnScreen(img('images/12.png'), confidence=CONF) or
                     pyautogui.locateOnScreen(img('images/13.png'), confidence=CONF)):
@@ -76,7 +86,7 @@ try:
             except pyautogui.ImageNotFoundException:
                 pass
 
-            # нажатия без задержек между проверками
+            # нажатия (проверка происходит ПАРАЛЛЕЛЬНО)
             time.sleep(2.0)
             keyboard.send('e')
             time.sleep(2.0)
