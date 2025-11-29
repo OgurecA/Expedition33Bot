@@ -6,7 +6,7 @@ import cv2
 import numpy as np
 
 # ----------------- настройки -----------------
-CONF        = 0.7
+CONF        = 0.5
 LOOP_DELAY  = 1.0
 
 BASE = getattr(sys, '_MEIPASS', os.path.abspath('.'))
