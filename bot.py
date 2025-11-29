@@ -82,10 +82,16 @@ try:
                 time.sleep(2.0)
                 meter = read_meter()
                 if meter >= 7:
-                    keyboard.send('e'); time.sleep(1.0)
-                    keyboard.send('w'); time.sleep(1.0)
-                    keyboard.send('f'); time.sleep(0.3)
-                    keyboard.send('space'); time.sleep(0.1)
+                    keyboard.send('e')
+                    time.sleep(1.0)
+                    keyboard.send('w')
+                    time.sleep(1.0)
+                    keyboard.send('f')
+                    time.sleep(0.2)
+                    print("[+] Space")
+                    keyboard.send('space')
+                    time.sleep(0.1)
+                    print("[+] Space")
                     keyboard.send('space')
                 else:
                     keyboard.send('f'); time.sleep(0.5)
@@ -94,8 +100,15 @@ try:
                 if pyautogui.locateOnScreen(img('images/12.png'), confidence=CONF):
                     print("[+] Найдено 12 → выход из цикла метра")
                     break
-            except Exception as e:     # ← ловим всё, чтобы не упасть
-                print(f"[!] Ошибка в цикле метра: {e}")
+            except Exception as e:
+                print(f"[!] Ошибка в цикле метра: {type(e).__name__}: {e.args}")
+                # дебаг-скрин
+                try:
+                    debug_shot = pyautogui.screenshot()
+                    debug_shot.save(r'D:\a\Expedition33Bot\Expedition33Bot\debug_screen.png')
+                    print("[debug] Скрин сохранён как debug_screen.png")
+                except:
+                    pass
                 time.sleep(LOOP_DELAY)
 
         print("[+] Цикл завершён, повторяем...")
