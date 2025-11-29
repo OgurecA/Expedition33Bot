@@ -19,7 +19,7 @@ def read_meter():
     while True:
         try:
             # делаем скрин области meter.png
-            region = pyautogui.locateOnScreen(img('images/meter.png'), confidence=CONF)
+            region = pyautogui.locateOnScreen(img('images/11.png'), confidence=CONF)
             if region:
                 # захватываем только эту область
                 im = pyautogui.screenshot(region=region)
