@@ -72,7 +72,7 @@ try:
         keyboard.send('f'); time.sleep(1.0)
                 # 2. после начала боя: ждём 5 сек, затем E-Q-F с интервалом 1 сек
         print("[+] Ждём 5 сек после начала боя...")
-        time.sleep(5.0)
+        time.sleep(7.0)
         print("[+] Нажимаем E-Q-F с интервалом 1 сек")
         keyboard.send('e'); time.sleep(1.0)
         keyboard.send('q'); time.sleep(1.0)
