@@ -6,39 +6,12 @@ import cv2
 import numpy as np
 
 # ----------------- настройки -----------------
-CONF        = 0.6
-LOOP_DELAY  = 0.5
+CONF        = 0.7
+LOOP_DELAY  = 1.0
 
 BASE = getattr(sys, '_MEIPASS', os.path.abspath('.'))
 def img(path):
     return os.path.join(BASE, path)
-
-# ----------------- читаем метр -----------------
-def read_meter():
-    """Перебираем 10 шаблонов 0a.png ... 9a.png и берём ЛУЧШЕЕ совпадение."""
-    while True:
-        best_digit = None
-        best_conf  = -1.0
-        screen     = np.array(pyautogui.screenshot())
-
-        for d in range(10):
-            try:
-                template = cv2.imread(img(f'images/{d}a.png'), cv2.IMREAD_COLOR)
-                if template is None:
-                    continue
-                res = cv2.matchTemplate(screen, template, cv2.TM_CCOEFF_NORMED)
-                _, max_val, _, _ = cv2.minMaxLoc(res)
-                if max_val > best_conf:
-                    best_conf  = max_val
-                    best_digit = d
-            except Exception as e:
-                print(f"[!] Ошибка при поиске {d}a: {e}")
-                continue
-
-        if best_digit is not None:
-            print(f"[+] Метр = {best_digit} (лучшее совпадение {best_conf:.3f})")
-            return best_digit
-        time.sleep(LOOP_DELAY)
 
 # ----------------- старые функции -----------------
 def wait_and_hold_key(image, key, hold_time):
@@ -81,58 +54,40 @@ def wait_and_hold_lmb(image, hold_time):
             pass
         time.sleep(LOOP_DELAY)
 
-# ----------------- основной цикл -----------------
+# ----------------- основной цикл (НОВОЕ) -----------------
+# ----------------- основной цикл (НОВОЕ) -----------------
 print("Бот запущен. Нажми Ctrl+C для остановки.")
 try:
     while True:
-        # 1. начало боя
+        # 1. начало боя (без изменений)
         wait_and_hold_key('images/1.png', 'e', 2)
         wait_and_click('images/2.png')
         wait_and_hold_lmb('images/5.png', 2)
 
-        # 2. активируем окно игры (один раз перед циклом метра)
-        try:
-            game = pyautogui.getWindowsWithTitle('Expedition 33')[0]
-            game.activate()
-        except Exception as e:
-            print(f"[!] Не удалось активировать окно: {e}")
-
-        # 3. цикл: метр + действия, пока не появится 12 или 13
+        # 2. фоновая серия нажатий до появления 12 или 13
+        print("[+] Запускаем серию E-W-F-Space-Space до появления 12/13")
         while True:
+            # фоновая проверка 12/13 каждую 1 секунду
             try:
-                time.sleep(2.0)
-                meter = read_meter()
-                if meter >= 7:
-                    keyboard.send('e'); time.sleep(1.0)
-                    keyboard.send('w'); time.sleep(1.0)
-                    keyboard.send('f'); time.sleep(3.0)
-                    # пробел – клик по картинке, чтобы не открывать калькулятор
-                    space_btn = pyautogui.locateOnScreen(img('images/space.png'), confidence=CONF)
-                    if space_btn:
-                        pyautogui.click(space_btn)
-                        time.sleep(0.1)
-                        pyautogui.click(space_btn)
-                    time.sleep(4.0)
-                else:
-                    keyboard.send('f'); time.sleep(0.5)
-                    keyboard.send('f')
-                    time.sleep(4.0)
-
-                # выход по 12 или 13
                 if (pyautogui.locateOnScreen(img('images/12.png'), confidence=CONF) or
                     pyautogui.locateOnScreen(img('images/13.png'), confidence=CONF)):
-                    print("[+] Бой закончен → выход из цикла метра")
+                    print("[+] Найдено 12 или 13 → выход из серии")
                     break
-            except Exception as e:
-                print(f"[!] Ошибка в цикле метра: {type(e).__name__}: {e.args}")
-                try:
-                    debug_shot = pyautogui.screenshot()
-                    debug_shot.save(r'D:\a\Expedition33Bot\Expedition33Bot\debug_screen.png')
-                    print("[debug] Скрин сохранён как debug_screen.png")
-                except:
-                    pass
-                time.sleep(LOOP_DELAY)
+            except pyautogui.ImageNotFoundException:
+                pass
 
-        print("[+] Цикл завершён, повторяем...")
+            # нажатия без задержек между проверками
+            keyboard.send('e')
+            time.sleep(2.0)
+            keyboard.send('w')
+            time.sleep(2.0)
+            keyboard.send('f')
+            time.sleep(2.0)
+            keyboard.send('space')
+            time.sleep(0.1)
+            keyboard.send('space')
+            time.sleep(2.0)          # пауза перед следующим циклом
+
+        print("[+] Серия завершена, повторяем главный цикл...")
 except KeyboardInterrupt:
     print("\n[!] Остановлено пользователем.")
