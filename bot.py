@@ -87,15 +87,17 @@ try:
                     keyboard.send('w')
                     time.sleep(1.0)
                     keyboard.send('f')
-                    time.sleep(0.2)
+                    time.sleep(0.1)
                     print("[+] Space")
                     keyboard.send('space')
                     time.sleep(0.1)
                     print("[+] Space")
                     keyboard.send('space')
+                    time.sleep(4.0)
                 else:
                     keyboard.send('f'); time.sleep(0.5)
                     keyboard.send('f')
+                    time.sleep(4.0)
 
                 if pyautogui.locateOnScreen(img('images/12.png'), confidence=CONF):
                     print("[+] Найдено 12 → выход из цикла метра")
