@@ -54,7 +54,7 @@ def wait_and_hold_lmb(image, hold_time):
             pass
         time.sleep(LOOP_DELAY)
 
-# ----------------- основной цикл (НОВОЕ) -----------------
+# ----------------- основной цикл (ЧИСТЫЙ ЛИСТ) -----------------
 print("Бот запущен. Нажми Ctrl+C для остановки.")
 try:
     while True:
@@ -63,42 +63,26 @@ try:
         wait_and_click('images/2.png')
         wait_and_hold_lmb('images/5.png', 2)
 
-        # 2. ждём 14.png, затем запускаем серию до 12/13
-        print("[+] Жду появления 14.png...")
-        while True:
-            try:
-                if pyautogui.locateOnScreen(img('images/14.png'), confidence=CONF):
-                    print("[+] Найдено 14 → запускаем серию E-W-F-Space-Space")
-                    break
-            except pyautogui.ImageNotFoundException:
-                pass
-            time.sleep(1.0)
+        # 2. ПОСЛЕ 5.png – ПУСТО, ждём твоей команды
+                # 2. после начала боя: ждём 5 сек, затем E-Q-F с интервалом 1 сек
+        print("[+] Ждём 5 сек после начала боя...")
+        time.sleep(5.0)
+        print("[+] Нажимаем E-Q-F с интервалом 1 сек")
+        keyboard.send('e'); time.sleep(1.0)
+        keyboard.send('q'); time.sleep(1.0)
+        keyboard.send('f'); time.sleep(1.0)
+                # 3. ещё 5 сек перерыв, затем E-W-F-Space-Space
+        print("[+] Перерыв 5 сек...")
+        time.sleep(5.0)
+        print("[+] Нажимаем E-W-F-Space-Space")
+        keyboard.send('e'); time.sleep(1.0)
+        keyboard.send('w'); time.sleep(1.0)
+        keyboard.send('f'); time.sleep(0.8)
+        keyboard.send('space'); time.sleep(0.05)
+        keyboard.send('space'); time.sleep(1.0)
 
-        # 3. серия нажатий до появления 12 или 13
-        print("[+] Запускаем серию E-W-F-Space-Space до 12/13")
-        while True:
-            # фоновая проверка 12/13 каждую секунду
-            try:
-                if (pyautogui.locateOnScreen(img('images/12.png'), confidence=CONF) or
-                    pyautogui.locateOnScreen(img('images/13.png'), confidence=CONF)):
-                    print("[+] Найдено 12 или 13 → выход из серии")
-                    break
-            except pyautogui.ImageNotFoundException:
-                pass
+        print("[+] Цикл завершён, повторяем...")
+        time.sleep(1)          # просто ждём, пока ты не скажешь, что делать
 
-            # нажатия (проверка происходит ПАРАЛЛЕЛЬНО)
-            time.sleep(2.0)
-            keyboard.send('e')
-            time.sleep(2.0)
-            keyboard.send('w')
-            time.sleep(2.0)
-            keyboard.send('f')
-            time.sleep(3.0)
-            keyboard.send('space')
-            time.sleep(0.1)
-            keyboard.send('space')
-            time.sleep(2.0)          # пауза перед следующим циклом
-
-        print("[+] Серия завершена, повторяем главный цикл...")
 except KeyboardInterrupt:
     print("\n[!] Остановлено пользователем.")
