@@ -78,25 +78,25 @@ try:
 
         # 2. цикл: метр + действия, пока не появится 12
         while True:
-            time.sleep(2.0)
-            meter = read_meter()          # ждём цифру
-            if meter >= 7:
-                keyboard.send('e'); time.sleep(1.0)
-                keyboard.send('w'); time.sleep(1.0)
-                keyboard.send('f'); time.sleep(0.5)
-                keyboard.send('space'); time.sleep(0.1)
-                keyboard.send('space')
-            else:
-                keyboard.send('f'); time.sleep(0.5)
-                keyboard.send('f')
+            try:                       # ← общий страховочный блок
+                time.sleep(2.0)
+                meter = read_meter()
+                if meter >= 7:
+                    keyboard.send('e'); time.sleep(1.0)
+                    keyboard.send('w'); time.sleep(1.0)
+                    keyboard.send('f'); time.sleep(0.3)
+                    keyboard.send('space'); time.sleep(0.1)
+                    keyboard.send('space')
+                else:
+                    keyboard.send('f'); time.sleep(0.5)
+                    keyboard.send('f')
 
-            # 12 ищем ТОЛЬКО здесь – выходим, когда появилась
-            try:
                 if pyautogui.locateOnScreen(img('images/12.png'), confidence=CONF):
                     print("[+] Найдено 12 → выход из цикла метра")
                     break
-            except pyautogui.ImageNotFoundException:
-                pass
+            except Exception as e:     # ← ловим всё, чтобы не упасть
+                print(f"[!] Ошибка в цикле метра: {e}")
+                time.sleep(LOOP_DELAY)
 
         print("[+] Цикл завершён, повторяем...")
 except KeyboardInterrupt:
