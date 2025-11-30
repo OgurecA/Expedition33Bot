@@ -89,7 +89,7 @@ try:
         print("[+] Перерыв 5 сек...")
         time.sleep(5.0)
         keyboard.send('f'); time.sleep(5.0)
-        keyboard.send('f'); time.sleep(2.0)
+        keyboard.send('f'); time.sleep(4.0)
         # 6. наводимся на кнопку Торговать и жмём F
         print("[+] Навожусь на кнопку Торговать и жму F")
         wait_and_click('images/4.png')
