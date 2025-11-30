@@ -70,28 +70,34 @@ try:
         keyboard.send('e'); time.sleep(1.0)
         keyboard.send('w'); time.sleep(1.0)
         keyboard.send('f'); time.sleep(1.0)
-                # 2. после начала боя: ждём 5 сек, затем E-Q-F с интервалом 1 сек
+        # 3. после начала боя: ждём 5 сек, затем E-Q-F с интервалом 1 сек
         print("[+] Перерыв 5 сек...")
         time.sleep(7.0)
         print("[+] Last Chance")
         keyboard.send('e'); time.sleep(1.0)
         keyboard.send('q'); time.sleep(1.0)
         keyboard.send('f'); time.sleep(1.0)
-                # 3. ещё 5 сек перерыв, затем E-W-F-Space-Space
+        # 4. ещё 5 сек перерыв, затем E-W-F-Space-Space
         print("[+] Перерыв 5 сек...")
         time.sleep(5.0)
         print("[+] Phantom Strike")
         keyboard.send('e'); time.sleep(1.0)
         keyboard.send('w'); time.sleep(1.0)
         keyboard.send('f'); time.sleep(1.0)
-        # 3. Бой закончен
+        # 5. Бой закончен
         print("[+] Бой окончен")
         print("[+] Перерыв 5 сек...")
         time.sleep(5.0)
         keyboard.send('f'); time.sleep(5.0)
         keyboard.send('f'); time.sleep(2.0)
+        # 6. наводимся на кнопку Торговать и жмём F
+        print("[+] Навожусь на кнопку Торговать и жму F")
+        wait_and_click('images/4.png')
+        keyboard.send('f')
+        time.sleep(1.0)
 
         print("[+] Цикл завершён, повторяем...")
+
         time.sleep(1)          # просто ждём, пока ты не скажешь, что делать
 
 except KeyboardInterrupt:
