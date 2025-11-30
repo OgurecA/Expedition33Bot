@@ -84,21 +84,30 @@ try:
         keyboard.send('e'); time.sleep(1.0)
         keyboard.send('w'); time.sleep(1.0)
         keyboard.send('f'); time.sleep(1.0)
+
         # 5. Бой закончен
         print("[+] Бой окончен")
         print("[+] Перерыв 5 сек...")
         time.sleep(5.0)
         keyboard.send('f'); time.sleep(5.0)
         keyboard.send('f'); time.sleep(4.0)
+
         # 6. наводимся на кнопку Торговать и жмём F
         print("[+] Навожусь на кнопку Торговать и жму F")
-        wait_and_click('images/4.png')
-        keyboard.send('f')
-        time.sleep(1.0)
+        while True:
+            try:
+                # Поискаем кнопку "торговать" по тексту
+                if pyautogui.locateOnScreen(img('images/торговать.png'), confidence=CONF):
+                    print("[+] Найдено кнопка 'Торговать'")
+                    keyboard.send('f')  # Жмём 'F'
+                    break  # Если кнопка найдена, выходим из цикла
+                else:
+                    print("[!] Кнопка 'Торговать' не найдена")
+                    time.sleep(1)  # Ждём 1 секунду перед повторным нажатием
+            continue  # Продолжаем цикл нажатий
 
         print("[+] Цикл завершён, повторяем...")
-
-        time.sleep(1)          # просто ждём, пока ты не скажешь, что делать
+        time.sleep(1)  # просто ждём, пока ты не скажешь, что делать
 
 except KeyboardInterrupt:
     print("\n[!] Остановлено пользователем.")
