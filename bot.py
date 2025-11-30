@@ -97,7 +97,7 @@ try:
         while True:
             try:
                 # Поискаем кнопку "торговать" по тексту
-                if pyautogui.locateOnScreen(img('images/торговать.png'), confidence=CONF):
+                if pyautogui.locateOnScreen(img('images/4.png'), confidence=CONF):
                     print("[+] Найдено кнопка 'Торговать'")
                     keyboard.send('f')  # Жмём 'F'
                     break  # Если кнопка найдена, выходим из цикла
