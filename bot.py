@@ -96,9 +96,12 @@ try:
         print("[+] Навожусь на кнопку Торговать и жму F")
         while True:
             try:
+                box = pyautogui.locateOnScreen(img('images/4.png'), confidence=CONF)
                 # Поискаем кнопку "торговать" по тексту
-                if pyautogui.locateOnScreen(img('images/4.png'), confidence=CONF):
+                if box:
                     print("[+] Найдено кнопка 'Торговать'")
+                    center = pyautogui.center(box)   # (x, y) центра картинки
+                    pyautogui.moveTo(center)
                     keyboard.send('f')  # Жмём 'F'
                     break  # Если кнопка найдена, выходим из цикла
                 else:
