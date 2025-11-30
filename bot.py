@@ -101,17 +101,19 @@ try:
                 if box:
                     print("[+] Найдено кнопка 'Торговать'")
                     center = pyautogui.center(box)   # (x, y) центра картинки
-                    pyautogui.moveTo(center)
+                    pyautogui.moveTo(center) 
+                    time.sleep(0.5)
                     keyboard.send('f')  # Жмём 'F'
                     break  # Если кнопка найдена, выходим из цикла
                 else:
                     print("[!] Кнопка 'Торговать' не найдена")
+                    keyboard.send('f')
                     time.sleep(1)  # Ждём 1 секунду перед повторным нажатием
             except pyautogui.ImageNotFoundException:
                 pass  # Если исключение не вызвано, просто пропускаем
 
-            print("[+] Цикл завершён, повторяем...")
-            time.sleep(1)  # Ждём 1 секунду перед повторным циклом
+        print("[+] Цикл завершён, повторяем...")
+        time.sleep(1)  # Ждём 1 секунду перед повторным циклом
 
 except KeyboardInterrupt:
     print("\n[!] Остановлено пользователем.")
